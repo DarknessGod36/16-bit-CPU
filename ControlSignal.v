@@ -94,7 +94,13 @@ always@(*) begin
                     end 
 
                     0010: begin
-                        
+                        CS_ALU_OT = 2'b00;
+                        CS_Ins_load = 1; 
+                        CS_Op1_load = 1;
+                        CS_Op2_load = 0;
+                        CS_PC_inc = 0;
+                        CS_PC_load = 1;
+                        CS_Reg_load = 1;
                     end
                     default: 
                 endcase
@@ -118,11 +124,25 @@ always@(*) begin
                     //Opcode 0001 -> MVI
                         CS_ALU_OT = 2'b00;
                         CS_Ins_load = 0;
-                        CS_Op1_load = 1;
+                        CS_Op1_load = 1; //since i create an op1_addr at op1 module so i will load it and save the addr into that variable
                         CS_Op2_load = 0;
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 0;
+                        next_state = 2byteload;
+                    end
+
+                    0010: begin
+                    //Opcode 0010 -> LDA
+                    //this operation we already set the accumulator to have a 000 address which mean we no need to load anything on the first pc
+                        CS_ALU_OT = 2'b00;
+                        CS_Ins_load = 0;
+                        CS_Op1_load = 0; 
+                        CS_Op2_load = 0;
+                        CS_PC_inc = 1;
+                        CS_PC_load = 0;
+                        CS_Reg_load = 0;
+                        next_state = 2byteload;
                     end
                     default: 
                 endcase
