@@ -24,6 +24,7 @@ Arith a1 (.Arith_opcode(ALU_opcode), .Arith_Out(outalu), .op1(op1), .op2(op2));
 Logic l1 (.op1(op1), .op2(op2), .Logic_opcode(ALU_opcode), .Logic_Out(outlg), .Logic_za(tza), .Logic_zb(tzb), .Logic_eq(teq), .Logic_gt(tgt), .Logic_lt(tlt));
 AddressingMode m1 (.op1_data(op1), .op2_data(op1), .op1_regaddr(op1_regaddr), .op2_regaddr(op2_regaddr), .AM_opcode(ALU_opcode), .AM_Outdata(outdata), .AM_OutRegaddr(outaddr));
 
+
 always@(op1, op2, ALU_OT, ALU_opcode) begin
     
     if(ALU_OT == 2'b00) begin
