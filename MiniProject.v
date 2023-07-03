@@ -1,0 +1,5 @@
+module MiniProject (
+    
+);
+    
+endmodule
