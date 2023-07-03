@@ -73,11 +73,31 @@ always@(*) begin
                 CS_PC_inc = 0;
                 CS_PC_load = 1;
                 CS_Reg_load = 0; 
+                next_state = execute;
+
                 //for this CS_Reg_load may need to change later or create 
                 //another state to delay it as the instruction only load into for spliting 
                 //it may cause a slight delay for the register/mem to receive the value and
                 //load into the op1 or op2 or acc
-                next_state = execute;
+            end
+
+            2byteload: begin
+                case (CS_opcode)
+                    0001: begin
+                        CS_ALU_OT = 2'b00;
+                        CS_Ins_load = 1; //this is the next pc split and the ins_set in the split module will be overwrite from the previous pc value 
+                        CS_Op1_load = 0;
+                        CS_Op2_load = 0;
+                        CS_PC_inc = 0;
+                        CS_PC_load = 1;
+                        CS_Reg_load = 1;
+                    end 
+
+                    0010: begin
+                        
+                    end
+                    default: 
+                endcase
             end
 
             execute: begin
@@ -87,13 +107,11 @@ always@(*) begin
                     //Opcode 0000 -> normal move
                         CS_ALU_OT = 2'b00;
                         CS_Ins_load = 0;
-                        CS_Op1_load = 1;
+                        CS_Op1_load = 0; //the op1 module wont run or the op1 variable will receive the value beforehand but wont proceed to any operation 
                         CS_Op2_load = 1;
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
-                        CS_Reg_load = 0;
-                        next_state = load;
-                        //dont know the reg_load can be as simulataneously transfer the data to opcode1
+                        CS_Reg_load = 1;
                     end 
                     
                     0001: begin
@@ -104,9 +122,7 @@ always@(*) begin
                         CS_Op2_load = 0;
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
-                        CS_Reg_load = 1;
-                    
-                            
+                        CS_Reg_load = 0;
                     end
                     default: 
                 endcase
