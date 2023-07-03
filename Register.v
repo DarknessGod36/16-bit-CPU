@@ -1,9 +1,10 @@
 module  Register (
-    Reg_addr, Reg_Out, Reg_data, Reg_load
+    Reg_addr_op1, Reg_addr_op2, Reg_Out_op1, Reg_Out_op2, Reg_data_op1, Reg_data_op2, Reg_load
 );
 
 input Reg_load; //control signal 
-input [15:0] Reg_addr;
+input [2:0] Reg_addr_op1;
+input [2:0] Reg_addr_op2;
 input [15:0] Reg_data;//data received from moving value exchange
 output reg [15:0] Reg_Out;
 
@@ -27,12 +28,14 @@ always(clk, Reg_load) begin
     @(posedge clk) begin
         
         if(Reg_load == 1) begin
-            mem[Reg_addr] = Reg_data
+            mem[Reg_addr_op1] = Reg_data_op1;
+            mem[Reg_addr_op2] = Reg_data_op2;
         end
 
         else if (Reg_load == 0) begin
 
-            Reg_Out = mem[Reg_addr];
+            Reg_Out_op1 = mem[Reg_addr_op1];
+            Reg_Out_op2 = mem[Reg_addr_op2];
             
         end
     end

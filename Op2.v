@@ -8,14 +8,14 @@ output [15:0] Op2_output;
 
 reg [15:0] temp;
 
-parameter Reg0 = 16'b0000000000001010;//10
-parameter Reg1 = 16'b0000001111101000;//1000
-parameter Reg2 = 16'b0000000001100100;//100
-parameter Reg3 = 16'b0000000000000001;//1
-parameter Reg4 = 16'b0010011100010000;//10000
-parameter Reg5 = 16'b0000000000000000;//0
-parameter Reg6 = 16'b0000000111110100;//500
-parameter Reg7 = 16'b0001001110001000;//5000
+// parameter Reg0 = 16'b0000000000001010;//10
+// parameter Reg1 = 16'b0000001111101000;//1000
+// parameter Reg2 = 16'b0000000001100100;//100
+// parameter Reg3 = 16'b0000000000000001;//1
+// parameter Reg4 = 16'b0010011100010000;//10000
+// parameter Reg5 = 16'b0000000000000000;//0
+// parameter Reg6 = 16'b0000000111110100;//500
+// parameter Reg7 = 16'b0001001110001000;//5000
 
 
 always@(clk, Op2_load)
@@ -29,7 +29,7 @@ begin
         end
 
         else if (Op2_load == 0) begin
-            Op2_output <= temp;
+            Op2_output <= temp; //Todo: this may need to change
             
         end
     end
