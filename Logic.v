@@ -13,13 +13,13 @@ reg za, zb, eq, gt, lt;
 always@(op1, op2, Logic_opcode) begin
     
     case (Logic_opcode)
-        4'b0000: Logic_Out = (op1 & op2);
-        4'b0001: Logic_Out = (op1 | op2);
-        4'b0010: Logic_Out = ~(op1 | op2);
-        4'b0011: Logic_Out = (~op1);
-        4'b0100: Logic_Out = (~op2);
-        4'b0101: Logic_Out = (op1 ^ op2);
-        4'b0110: Logic_Out = ~(op1 ^ op2);
+        4'b0100: Logic_Out = (op1 & op2); //AND gate
+        4'b0101: Logic_Out = (op1 | op2); //OR gate
+        4'b0110: Logic_Out = ~(op1 | op2); //NOR gate
+        4'b0111: Logic_Out = (~op1); //INVERTED 
+        4'b1000: Logic_Out = (~op2); //INVERTED
+        4'b1001: Logic_Out = (op1 ^ op2); //XOR gate 
+        4'b1010: Logic_Out = ~(op1 ^ op2); //XNOR gate
         default: Logic_Out = 16'b0000000000000000;
     endcase
 end

@@ -20,19 +20,19 @@ always@(op1, op2, AM_opcode) begin
     
     case (AM_opcode)
         //MOV    R1 <- R2 
-        4'b0000:  
+        4'b1011:  
         AM_Outdata <= op2_data;
         AM_OutRegaddr <= op1_regaddr; //this op1 reg will be received form the op1 output 
         //mem[op1_regaddr] = op2_data;
         
         //MVI 
-        4'b0001:
+        4'b1100:
         AM_Outdata <= op2_regaddr; //this will be the next pc instruction set, the op2_regaddr will instantly assign the next pc instruction set from splitinsset
         AM_OutRegaddr <= op1_regaddr;
         //mem[op1_regaddr] = op2_regaddr;
 
         //LDA
-        4'b0010:
+        4'b1101:
         AM_Outdata <= op1_data;
         AM_OutRegaddr <= AM_Accaddr;
         //mem[AM_Accaddr] = op1_data;

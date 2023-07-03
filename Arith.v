@@ -9,15 +9,15 @@ always@(op1, op2, Arith_opcode) begin
     
     case(Arith_opcode)
 
-    4'b0000: Arith_Out = op1 + op2; 
-    4'b0001: Arith_Out = op1 * op2;
-    4'b0010: if(op1 > op2) begin
+    4'b0000: Arith_Out = op1 + op2; //ADD
+    4'b0001: Arith_Out = op1 * op2; //MUL
+    4'b0010: if(op1 > op2) begin //SUB
         Arith_Out = op1 - op2;
         end
         else begin
             Arith_Out = op2 - op1;
         end
-    4'b0011: if (op1>op2) begin
+    4'b0011: if (op1>op2) begin //DIV
         Arith_Out = op1/op2;
         end
         else begin
