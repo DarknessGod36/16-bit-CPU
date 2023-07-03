@@ -17,12 +17,12 @@ output CS_Reg_load; //after processing addressing mode/arith/logic or consider a
 //Control Signal 
 //ALU_OT, Op1_load, Op2_load, PC_load, PC_inc, Reg_load, Ins_load
 
-// reg CS_ALU_OT;
-// reg CS_Ins_load; 
-// reg CS_Op1_load; 
-// reg CS_Op2_load; 
-// reg CS_PC_load; 
-// reg CS_PC_inc; 
-// reg CS_Reg_load;
+reg CS_ALU_OT;
+reg CS_Ins_load; 
+reg CS_Op1_load; 
+reg CS_Op2_load; 
+reg CS_PC_load; 
+reg CS_PC_inc; 
+reg CS_Reg_load;
 
 endmodule
