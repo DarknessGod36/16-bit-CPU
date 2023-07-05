@@ -27,13 +27,13 @@ always@(op1, op2, AM_opcode) begin
         
         //MVI 
         4'b1100:
-        AM_Outdata <= op2_regaddr; //this will be the next pc instruction set, the op2_regaddr will instantly assign the next pc instruction set from splitinsset
+        AM_Outdata <= op2_data; //this will be the next pc instruction set, the op2_data will instantly assigned after the next pc instruction set execute
         AM_OutRegaddr <= op1_regaddr;
         //mem[op1_regaddr] = op2_regaddr;
 
         //LDA
         4'b1101:
-        AM_Outdata <= op1_data;
+        AM_Outdata <= op1_data; //this op1_data will be assign pc value 
         AM_OutRegaddr <= AM_Accaddr;
         //mem[AM_Accaddr] = op1_data;
 
