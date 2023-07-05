@@ -25,12 +25,13 @@ reg CS_Op2_load;
 reg CS_PC_load; 
 reg CS_PC_inc; 
 reg CS_Reg_load;
+reg [2:0] temp_opcode;
 
 
 reg [2:0] state;
 reg [2:0] next_state ;
 
-parameter reset = 4'b0000, load = 4'b0010, execute = 4'b0100, 2byteload = 4'b1000;
+parameter reset = 4'b0000, load = 4'b0010, execute = 4'b0100, 2byteload = 4'b1000, 2byteexecute = 4'b1001;
 always@(posedge clk) begin
     if(en == 0) begin
         state = reset;
@@ -82,34 +83,60 @@ always@(*) begin
             end
 
             2byteload: begin
-                case (CS_opcode)
-                    0001: begin
+                case (temp_opcode) //the opcode will still depend on the 1 byte instruction 
+                    1100: begin //MVI 2-byte instruction
                         CS_ALU_OT = 2'b00;
                         CS_Ins_load = 1; //this is the next pc split and the ins_set in the split module will be overwrite from the previous pc value 
                         CS_Op1_load = 0;
                         CS_Op2_load = 0;
                         CS_PC_inc = 0;
                         CS_PC_load = 1;
-                        CS_Reg_load = 1;
+                        CS_Reg_load = 0;
+                        next_state = 2byteexecute;
                     end 
 
-                    0010: begin
+                    1101: begin //LDA 2-byte instruction
                         CS_ALU_OT = 2'b00;
                         CS_Ins_load = 1; 
-                        CS_Op1_load = 1;
+                        CS_Op1_load = 0;
                         CS_Op2_load = 0;
                         CS_PC_inc = 0;
                         CS_PC_load = 1;
-                        CS_Reg_load = 1;
+                        CS_Reg_load = 0;
+                        next_state = 2byteexecute;
                     end
-                    default: 
+                endcase
+            end
+
+            2byteexecute: begin
+                case (temp_opcode)
+                    1100: begin //this will need op2_data as an output
+                        CS_ALU_OT = 2'b00;
+                        CS_Ins_load = 0; 
+                        CS_Op1_load = 0;
+                        CS_Op2_load = 1;
+                        CS_PC_inc = 1;
+                        CS_PC_load = 0;
+                        CS_Reg_load = 1;
+                        next_state = reset;
+                    end
+                    1101: begin //this will need the 2-byte instruciton pc and it will be processed on the the InsROM, the pc will be wired to op1_data in Addressing Mode 
+                        CS_ALU_OT = 2'b00;
+                        CS_Ins_load = 0; 
+                        CS_Op1_load = 0;
+                        CS_Op2_load = 0;
+                        CS_PC_inc = 1;
+                        CS_PC_load = 0;
+                        CS_Reg_load = 1;
+                        next_state = reset;
+                    end
                 endcase
             end
 
             execute: begin
                 case (CS_opcode)
                     //Mode 00 which is addressing mode
-                    0000: begin
+                    1011: begin
                     //Opcode 0000 -> normal move
                         CS_ALU_OT = 2'b00;
                         CS_Ins_load = 0;
@@ -120,7 +147,7 @@ always@(*) begin
                         CS_Reg_load = 1;
                     end 
                     
-                    0001: begin
+                    1100: begin
                     //Opcode 0001 -> MVI
                         CS_ALU_OT = 2'b00;
                         CS_Ins_load = 0;
@@ -129,10 +156,11 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 0;
+                        temp_opcode <= CS_opcode;
                         next_state = 2byteload;
                     end
 
-                    0010: begin
+                    1101: begin
                     //Opcode 0010 -> LDA
                     //this operation we already set the accumulator to have a 000 address which mean we no need to load anything on the first pc
                         CS_ALU_OT = 2'b00;
@@ -142,14 +170,144 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 0;
+                        temp_opcode <= CS_opcode;
                         next_state = 2byteload;
                     end
-                    default: 
+                    //Mode 01 which is Arithmetric mode
+                    0000: begin
+                    //Opcode 0000 -> ADD 
+                        CS_ALU_OT = 2'b01;
+                        CS_Ins_load = 0;
+                        CS_Op1_load = 1; 
+                        CS_Op2_load = 1;
+                        CS_PC_inc = 1;
+                        CS_PC_load = 0;
+                        CS_Reg_load = 1;
+                        next_state = reset;
+                    end
+                    0001: begin
+                    //Opcode 0001 -> MUL 
+                        CS_ALU_OT = 2'b01;
+                        CS_Ins_load = 0;
+                        CS_Op1_load = 1; 
+                        CS_Op2_load = 1;
+                        CS_PC_inc = 1;
+                        CS_PC_load = 0;
+                        CS_Reg_load = 1;
+                        next_state = reset;
+                    end
+                    0010: begin
+                    //Opcode 0010 -> SUB
+                        CS_ALU_OT = 2'b01;
+                        CS_Ins_load = 0;
+                        CS_Op1_load = 1; 
+                        CS_Op2_load = 1;
+                        CS_PC_inc = 1;
+                        CS_PC_load = 0;
+                        CS_Reg_load = 1;
+                        next_state = reset;
+                    end
+                    0011: begin
+                    //Opcode 0011 -> DIV
+                        CS_ALU_OT = 2'b01;
+                        CS_Ins_load = 0;
+                        CS_Op1_load = 1; 
+                        CS_Op2_load = 1;
+                        CS_PC_inc = 1;
+                        CS_PC_load = 0;
+                        CS_Reg_load = 1;
+                        next_state = reset;
+                    end
+                    //mode 10 which is Logical MOde
+                    0010: begin
+                    //Opcode 0100 -> AND
+                        CS_ALU_OT = 2'b10;
+                        CS_Ins_load = 0;
+                        CS_Op1_load = 1; 
+                        CS_Op2_load = 1;
+                        CS_PC_inc = 1;
+                        CS_PC_load = 0;
+                        CS_Reg_load = 1;
+                        next_state = reset;
+                    end
+                    0101: begin
+                    //Opcode 0101 -> OR
+                        CS_ALU_OT = 2'b10;
+                        CS_Ins_load = 0;
+                        CS_Op1_load = 1; 
+                        CS_Op2_load = 1;
+                        CS_PC_inc = 1;
+                        CS_PC_load = 0;
+                        CS_Reg_load = 1;
+                        next_state = reset;
+                    end
+                    0110: begin
+                    //Opcode 0110 -> NOR
+                        CS_ALU_OT = 2'b10;
+                        CS_Ins_load = 0;
+                        CS_Op1_load = 1; 
+                        CS_Op2_load = 1;
+                        CS_PC_inc = 1;
+                        CS_PC_load = 0;
+                        CS_Reg_load = 1;
+                        next_state = reset;
+                    end
+                    0111: begin
+                    //Opcode 0111 -> INV(op1)
+                        CS_ALU_OT = 2'b10;
+                        CS_Ins_load = 0;
+                        CS_Op1_load = 1; 
+                        CS_Op2_load = 0;
+                        CS_PC_inc = 1;
+                        CS_PC_load = 0;
+                        CS_Reg_load = 1;
+                        next_state = reset;
+                    end
+                    1000: begin
+                    //Opcode 1000 -> INV(op2)
+                        CS_ALU_OT = 2'b10;
+                        CS_Ins_load = 0;
+                        CS_Op1_load = 0; 
+                        CS_Op2_load = 1;
+                        CS_PC_inc = 1;
+                        CS_PC_load = 0;
+                        CS_Reg_load = 1;
+                        next_state = reset;
+                    end
+                    1001: begin
+                    //Opcode 1001 -> XOR
+                        CS_ALU_OT = 2'b10;
+                        CS_Ins_load = 0;
+                        CS_Op1_load = 1; 
+                        CS_Op2_load = 1;
+                        CS_PC_inc = 1;
+                        CS_PC_load = 0;
+                        CS_Reg_load = 1;
+                        next_state = reset;
+                    end
+                    1010: begin
+                    //Opcode 1010 -> XNOR
+                        CS_ALU_OT = 2'b10;
+                        CS_Ins_load = 0;
+                        CS_Op1_load = 1; 
+                        CS_Op2_load = 1;
+                        CS_PC_inc = 1;
+                        CS_PC_load = 0;
+                        CS_Reg_load = 1;
+                        next_state = reset;
+                    end
+                    default:begin
+                        CS_ALU_OT = 2'bZZ;
+                        CS_Ins_load = 1;
+                        CS_Op1_load = 0; 
+                        CS_Op2_load = 0;
+                        CS_PC_inc = 0;
+                        CS_PC_load = 0;
+                        CS_Reg_load = 0;
+                        next_state = reset;
+                    end 
                 endcase
             end
-
-
-            default: 
         endcase
     end
 end
