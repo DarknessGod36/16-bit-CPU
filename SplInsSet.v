@@ -15,16 +15,22 @@ reg [15:0] temp;
 always@(posedge clk) begin
     
     if(Ins_load == 1) begin
-        temp <= Ins_addr;
+        Ins_addr_output <= Ins_addr;
+        Ins_byte <= Ins_addr[13:12];
+        Ins_mode <= Ins_addr[15:14];
+        Ins_OT <= Ins_addr[1:0];
+        Ins_Op1 <= Ins_addr[7:5];
+        Ins_Op2 <= Ins_addr[4:2];
+        Ins_Opcode <= Ins_addr[11:8];
     end
 
-    Ins_addr_output <= Ins_addr;
-    Ins_byte <= temp[13:12];
-    Ins_mode <= temp[15:14];
-    Ins_OT <= temp [1:0];
-    Ins_Op1 <= temp [7:5];
-    Ins_Op2 <= temp [4:2];
-    Ins_Opcode <= temp [11:8];
+    // Ins_addr_output <= Ins_addr;
+    // Ins_byte <= temp[13:12];
+    // Ins_mode <= temp[15:14];
+    // Ins_OT <= temp [1:0];
+    // Ins_Op1 <= temp [7:5];
+    // Ins_Op2 <= temp [4:2];
+    // Ins_Opcode <= temp [11:8];
 end
 endmodule
 

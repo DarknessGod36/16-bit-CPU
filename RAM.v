@@ -1,29 +1,23 @@
-module RAM(clk, RAM_load, RAM_data, RAM_addr, RAM_out);
+module RAM(clk, RAM_addr, RAM_out);
 
-input clk,RAM_load; //RAM_load is a control signal 
-input [15:0] RAM_data; //we can initial all the RAM_data here
-input [15:0] RAM_addr; 
-//RAM address is different 
+input clk; 
+input [15:0] RAM_addr;  
 output reg [15:0] RAM_out;
-
+reg [15:0] RAM_data;
 reg [15:0] mem [0:15];
 
 initial begin
     RAM_addr = 16'b0000000000000000;
 end
 
-always@(posedge clk)
-begin 
-    if(RAM_load == 1) begin
-        //opcode //address
-        mem[RAM_addr] = RAM_data;//0000 1000 0000 0000 [11:8] [7:0] addr
-        RAM_addr 
-    end
+always@(posedge clk) begin 
 
-    else if(RAM_load == 0)begin
-        RAM_out = mem[RAM_addr];
-    end
-
+    case (RAM_addr)
+        16'b1000010110100001: RAM_data = 16'd1000;
+        16'b1000010001001001: RAM_data = 16'd5000;
+    endcase
+    RAM_out <= RAM_data;
+    
 end
 endmodule
 

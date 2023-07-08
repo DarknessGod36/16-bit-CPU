@@ -4,9 +4,9 @@ module Op2 (clk, Op2_datafromReg, Op2_output, Op2_load);
 input clk;
 input [15:0] Op2_datafromReg;
 input Op2_load; //control signal
-output [15:0] Op2_output;
-
+output reg [15:0] Op2_output;
 reg [15:0] temp;
+reg [15:0] temp1;
 
 
 always@(clk, Op2_load)
@@ -17,6 +17,7 @@ begin
         if(Op2_load == 1) begin
            Op2_output <= Op2_datafromReg;
            temp <= Op2_datafromReg;
+           
         end
 
         else if (Op2_load == 0) begin

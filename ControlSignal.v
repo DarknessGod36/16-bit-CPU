@@ -85,7 +85,7 @@ always@(*) begin
             2byteload: begin
                 case (temp_opcode) //the opcode will still depend on the 1 byte instruction 
                     1100: begin //MVI 2-byte instruction
-                        CS_ALU_OT = 2'b00;
+                        CS_ALU_OT = 2'bXX;
                         CS_Ins_load = 1; //this is the next pc split and the ins_set in the split module will be overwrite from the previous pc value 
                         CS_Op1_load = 0;
                         CS_Op2_load = 0;
@@ -96,7 +96,7 @@ always@(*) begin
                     end 
 
                     1101: begin //LDA 2-byte instruction
-                        CS_ALU_OT = 2'b00;
+                        CS_ALU_OT = 2'bXX;
                         CS_Ins_load = 1; 
                         CS_Op1_load = 0;
                         CS_Op2_load = 0;
@@ -114,7 +114,7 @@ always@(*) begin
                         CS_ALU_OT = 2'b00;
                         CS_Ins_load = 0; 
                         CS_Op1_load = 0;
-                        CS_Op2_load = 1;
+                        CS_Op2_load = 0;
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
@@ -149,7 +149,7 @@ always@(*) begin
                     
                     1100: begin
                     //Opcode 0001 -> MVI
-                        CS_ALU_OT = 2'b00;
+                        CS_ALU_OT = 2'bXX;
                         CS_Ins_load = 0;
                         CS_Op1_load = 1; //since i create an op1_addr at op1 module so i will load it and save the addr into that variable
                         CS_Op2_load = 0;
@@ -163,7 +163,7 @@ always@(*) begin
                     1101: begin
                     //Opcode 0010 -> LDA
                     //this operation we already set the accumulator to have a 000 address which mean we no need to load anything on the first pc
-                        CS_ALU_OT = 2'b00;
+                        CS_ALU_OT = 2'bXX;
                         CS_Ins_load = 0;
                         CS_Op1_load = 0; 
                         CS_Op2_load = 0;

@@ -1,11 +1,11 @@
-module InsROM(clk, ROM_read, ROM_addr, ROM_InsSet);
+module InsROM(clk, ROM_addr, ROM_addr_out, ROM_InsSet_out);
 
 input clk;
-input reg [15:0] ROM_addr;
-output reg [15:0] ROM_InsSet;
+input [15:0] ROM_addr;
+output reg [15:0] ROM_addr_out;
+reg [15:0] ROM_InsSet;
+output reg [15:0] ROM_InsSet_out;
 
-reg [15:0] mem_addr [15:0];
-reg [15:0] mem_InsSet [15:0];
 
 
 //mode  byte    opcode  operand1    operand2    operationtype
@@ -29,7 +29,7 @@ reg [15:0] mem_InsSet [15:0];
 
 
 initial begin
-    ROM_addr = 16'b0000000000000000;
+    ROM_InsSet = 16'b0000000000000000;
 
 end
 
@@ -53,6 +53,9 @@ always@(posedge clk) begin
     //AND
     16'b0000000000001000: ROM_InsSet = 16'b0001010010000110; //----> OP1(register addr = 100) = ??, OP2(register addr = 001) = ??
 endcase
+
+    ROM_addr_out <= ROM_addr;
+    ROM_InsSet_out <= ROM_InsSet;
 end
 endmodule
 

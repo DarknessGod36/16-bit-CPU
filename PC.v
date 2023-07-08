@@ -3,10 +3,14 @@ module PC(clk, Ins_addr,PC_load, PC_inc, PC_addr);
 //PC_load & PC_inc are the control signal received from the CPU
 //PC_load is the address from the instruction set/represent the instruction set load into PC
 input clk, PC_load, PC_inc;
-input [15:0] Ins_addr;
+input [15:0] Ins_addr; //ROM_addr
 output reg [15:0] PC_addr; //this will go in InsROM
 
 reg [15:0] temp;
+
+initial begin
+    temp = 16'b0000000000000000;
+end
 
 
 always@(posedge clk) begin

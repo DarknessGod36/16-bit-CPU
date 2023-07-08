@@ -28,38 +28,38 @@ end
 always@(op1, op2) begin
     
     if(op1 == op2) begin
-        eq = 1;
+        Logic_eq = 1;
     end
     else begin
-        eq = 0;
+        Logic_eq = 0;
     end
 
     if(op1 > op2) begin
-        gt = 1;
+        Logic_gt = 1;
     end
     else begin
-        gt = 0;
+        Logic_gt = 0;
     end
 
     if(op1 < op2) begin
-        lt = 1;
+        Logic_lt = 1;
     end
     else begin
-        lt = 0;
+        Logic_lt = 0;
     end
 
     if(op1 == 16'b0000000000000000) begin
-        za = 1;
+        Logic_za = 1;
     end
     else begin
-        za = 0;
+        Logic_za = 0;
     end
 
     if(op2 == 16'b0000000000000000) begin
-        zb = 1;
+        Logic_zb = 1;
     end
     else begin
-        zb = 0;
+        Logic_zb = 0;
     end
 end
 endmodule
