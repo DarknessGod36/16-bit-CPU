@@ -25,7 +25,7 @@ reg CS_Op2_load;
 reg CS_PC_load; 
 reg CS_PC_inc; 
 reg CS_Reg_load;
-reg [2:0] temp_opcode;
+reg [3:0] temp_opcode;
 
 
 reg [3:0] state;
