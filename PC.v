@@ -8,10 +8,6 @@ output reg [15:0] PC_addr; //this will go in InsROM
 
 reg [15:0] temp;
 
-initial begin
-    temp = 16'b0000000000000000;
-end
-
 
 always@(posedge clk) begin
 
