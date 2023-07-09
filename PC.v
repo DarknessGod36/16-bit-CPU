@@ -12,7 +12,7 @@ reg [15:0] temp;
 always@(posedge clk) begin
 
     if(PC_load == 0 && PC_inc == 0) begin
-        temp <= 16'b0000000000000000;
+        temp <= temp;
     end
 
     else if(PC_load == 1 && PC_inc == 0) begin
@@ -23,8 +23,8 @@ always@(posedge clk) begin
         temp = temp + 16'b0000000000000001;
     end
 
-    else begin
-        temp <= temp; //PC_load && PC_inc should not be 1 on the same time
+    else if(PC_load == 1 && PC_inc == 1) begin
+        temp = 16'b0000000000000000;
     end
 
     PC_addr <= temp;

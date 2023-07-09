@@ -31,7 +31,7 @@ reg [2:0] temp_opcode;
 reg [2:0] state;
 reg [2:0] next_state ;
 
-parameter reset = 4'b0000, load = 4'b0010, execute = 4'b0100, 2byteload = 4'b1000, 2byteexecute = 4'b1001;
+parameter reset = 4'b0000, load = 4'b0010, execute = 4'b0100, byte2load = 4'b1000, byte2execute = 4'b1001;
 always@(posedge clk) begin
     if(en == 0) begin
         state = reset;
@@ -47,8 +47,8 @@ always@(*) begin
         CS_Ins_load = 0;
         CS_Op1_load = 0;
         CS_Op2_load = 0;
-        CS_PC_inc = 0;
-        CS_PC_load = 0;
+        CS_PC_inc = 1;
+        CS_PC_load = 1;
         CS_Reg_load = 0;
         next_state = reset;
     end
@@ -82,20 +82,7 @@ always@(*) begin
                 //load into the op1 or op2 or acc
             end
 
-            2byteload: begin
-                case (temp_opcode) //the opcode will still depend on the 1 byte instruction 
-                    1100: begin //MVI 2-byte instruction
-                        CS_ALU_OT = 2'bXX;
-                        CS_Ins_load = 1; //this is the next pc split and the ins_set in the split module will be overwrite from the previous pc value 
-                        CS_Op1_load = 0;
-                        CS_Op2_load = 0;
-                        CS_PC_inc = 0;
-                        CS_PC_load = 1;
-                        CS_Reg_load = 0;
-                        next_state = 2byteexecute;
-                    end 
-
-                    1101: begin //LDA 2-byte instruction
+            byte2load: begin 
                         CS_ALU_OT = 2'bXX;
                         CS_Ins_load = 1; 
                         CS_Op1_load = 0;
@@ -103,12 +90,10 @@ always@(*) begin
                         CS_PC_inc = 0;
                         CS_PC_load = 1;
                         CS_Reg_load = 0;
-                        next_state = 2byteexecute;
-                    end
-                endcase
+                        next_state = byte2execute;
             end
 
-            2byteexecute: begin
+            byte2execute: begin
                 case (temp_opcode)
                     1100: begin //this will need op2_data as an output
                         CS_ALU_OT = 2'b00;
@@ -118,7 +103,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = load;
+                        next_state = reset;
                     end
                     1101: begin //this will need the 2-byte instruciton pc and it will be processed on the the InsROM, the pc will be wired to op1_data in Addressing Mode 
                         CS_ALU_OT = 2'b00;
@@ -128,7 +113,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = load;
+                        next_state = reset;
                     end
                 endcase
             end
@@ -145,7 +130,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = load;
+                        next_state = reset;
                     end 
                     
                     1100: begin
@@ -158,7 +143,7 @@ always@(*) begin
                         CS_PC_load = 0;
                         CS_Reg_load = 0;
                         temp_opcode <= CS_opcode;
-                        next_state = 2byteload;
+                        next_state = byte2load;
                     end
 
                     1101: begin
@@ -172,7 +157,7 @@ always@(*) begin
                         CS_PC_load = 0;
                         CS_Reg_load = 0;
                         temp_opcode <= CS_opcode;
-                        next_state = 2byteload;
+                        next_state = byte2load;
                     end
                     //Mode 01 which is Arithmetric mode
                     0000: begin
@@ -184,7 +169,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = load;
+                        next_state = reset;
 
                     end
                     0001: begin
@@ -196,7 +181,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = load;
+                        next_state = reset;
 
                     end
                     0010: begin
@@ -208,7 +193,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = load;
+                        next_state = reset;
 
                     end
                     0011: begin
@@ -220,7 +205,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = load;
+                        next_state = reset;
                         
                     end
                     //mode 10 which is Logical MOde
@@ -233,7 +218,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = load;
+                        next_state = reset;
                         
                     end
                     0101: begin
@@ -245,7 +230,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = load;
+                        next_state = reset;
                         
                     end
                     0110: begin
@@ -257,7 +242,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = load;
+                        next_state = reset;
                         
                     end
                     0111: begin
@@ -269,7 +254,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = load;
+                        next_state = reset;
                         
                     end
                     1000: begin
@@ -281,7 +266,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = load;
+                        next_state = reset;
                         
                     end
                     1001: begin
@@ -293,7 +278,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = load;
+                        next_state = reset;
                         
                     end
                     1010: begin
@@ -305,7 +290,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = load;
+                        next_state = reset;
                         
                     end
                     default:begin
@@ -316,7 +301,7 @@ always@(*) begin
                         CS_PC_inc = 0;
                         CS_PC_load = 0;
                         CS_Reg_load = 0;
-                        next_state = load;
+                        next_state = reset;
                         
                     end 
                 endcase
