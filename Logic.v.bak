@@ -6,8 +6,9 @@ input [15:0] op1;
 input [15:0] op2;
 input [3:0] Logic_opcode;
 output reg [15:0] Logic_Out;
-output Logic_za, Logic_zb, Logic_eq, Logic_gt, Logic_lt;
-reg Logic_za, Logic_zb, Logic_eq, Logic_gt, Logic_lt;
+output za, zb, eq, gt, lt;
+reg za, zb, eq, gt, lt;
+
 
 always@(op1, op2, Logic_opcode) begin
     

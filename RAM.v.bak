@@ -6,6 +6,9 @@ output reg [15:0] RAM_out;
 reg [15:0] RAM_data;
 reg [15:0] mem [0:15];
 
+initial begin
+    RAM_addr = 16'b0000000000000000;
+end
 
 always@(posedge clk) begin 
 

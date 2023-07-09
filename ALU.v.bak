@@ -5,6 +5,7 @@ module ALU (
 input clk;
 input [15:0] op1;
 input [15:0] op2;
+input [15:0] op1_pc_value;
 input [15:0] op1_regaddr;
 input [15:0] op2_regaddr;
 input [3:0] ALU_opcode;
@@ -30,21 +31,21 @@ AddressingMode m1 (.op2_data(op2), .op1_regaddr(op1_regaddr), .op2_regaddr(op2_r
 always@(op1, op2, ALU_OT, ALU_opcode) begin
     
     if(ALU_OT == 2'b00) begin
-        ALU_out = outdata;
+        ALU_Out = outdata;
         Addr_out = outaddr;
     end
     else if (ALU_OT == 2'b01) begin
-        ALU_out = outalu;
+        ALU_Out = outalu;
         Addr_out = op1_regaddr;
     end
     
     else if (ALU_OT == 2'b10) begin
-        ALU_out = outlg;
+        ALU_Out = outlg;
         Addr_out = op1_regaddr;
     end
 
     else begin
-        ALU_out = 16'b0000000000000000;
+        ALU_Out = 16'b0000000000000000;
         Addr_out = 16'b0000000000000000;
     end
 

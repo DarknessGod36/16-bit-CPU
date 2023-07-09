@@ -1,8 +1,9 @@
 module ControlSignal (
-    clk, en, CS_opcode, CS_ALU_OT, CS_Op1_load, CS_Op2_load, CS_PC_load, CS_Reg_load, CS_Ins_load, CS_PC_inc);
+    clk, en, CS_opcode, CS_ALU_OT, CS_Op1_load, CS_Op2_load, CS_PC_load, CS_Reg_load, CS_Ins_load, CS_PC_inc;
+);
 
 
-input clk;
+input clk, 
 input en; //enable the control signal
 input [3:0] CS_opcode;
 output [2:0] CS_ALU_OT; //the ALU mode for picking which mode it will process 

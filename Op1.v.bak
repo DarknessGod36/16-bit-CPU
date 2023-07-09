@@ -22,7 +22,7 @@ begin
             temp <= Op1_datafromReg;
         end
 
-        else if (Op1_load == 0) begin
+        else if (Op_load == 0) begin
             Op1_output <= temp;
         end
     end
