@@ -3,7 +3,7 @@ module AddressingMode (
 );
 
 input [15:0] op2_data;
-input [15:0] op1_regaddr;
+input [2:0] op1_regaddr;
 input [15:0] op2_regaddr;
 reg [2:0] AM_Accaddr;
 input [3:0] AM_opcode;

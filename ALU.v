@@ -5,7 +5,7 @@ module ALU (
 input clk;
 input [15:0] op1;
 input [15:0] op2;
-input [15:0] op1_regaddr;
+input [2:0] op1_regaddr;
 input [15:0] op2_regaddr;
 input [3:0] ALU_opcode;
 input [1:0] ALU_OT; //control signal
@@ -17,7 +17,7 @@ reg za, zb, eq, gt, lt;
 
 wire [15:0] outlg;
 wire [15:0] outalu;
-wire [15:0] outaddr;
+wire [2:0] outaddr;
 wire [15:0] outdata;
 
 //inside the bracket is the variable from this module
@@ -29,30 +29,31 @@ AddressingMode m1 (.op2_data(op2), .op1_regaddr(op1_regaddr), .op2_regaddr(op2_r
 
 always@(op1, op2, ALU_OT, ALU_opcode) begin
     
-    if(ALU_OT == 2'b00) begin
+    if(ALU_OT == 2'b00) begin //normal move
         ALU_out = outdata;
         Addr_out = outaddr;
     end
-    else if (ALU_OT == 2'b01) begin
+    else if (ALU_OT == 2'b01) begin //arithmetric 
         ALU_out = outalu;
         Addr_out = op1_regaddr;
     end
     
-    else if (ALU_OT == 2'b10) begin
+    else if (ALU_OT == 2'b10) begin //logic
         ALU_out = outlg;
         Addr_out = op1_regaddr;
+        za = tza;
+        zb = tzb;
+        eq = teq;
+        gt = tgt;
+        lt = tlt;
     end
 
     else begin
         ALU_out = 16'b0000000000000000;
-        Addr_out = 16'b0000000000000000;
+        Addr_out = 3'b000;
     end
 
-    za = tza;
-    zb = tzb;
-    eq = teq;
-    gt = tgt;
-    lt = tlt;
+    
 end
 
 endmodule

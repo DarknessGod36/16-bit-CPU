@@ -1,5 +1,5 @@
 module MiniProject 
-(clk, en, za, zb, eq, gt, lt, ALU_out, Addr_out);
+(clk, en, za, zb, eq, gt, lt, ALU_Out, Addr_out, tPC_load, tPC_inc, oregA, oregR1, oregR2, oregR3, oregR4, oregR5, oregR6, oregR7, tReg_load);
 
 input clk;
 input en;
@@ -8,8 +8,13 @@ output zb;
 output eq;
 output gt;
 output lt;
-output [15:0] ALU_out;
-output [15:0] Addr_out;
+output [15:0] ALU_Out;
+output [2:0] Addr_out;
+output tPC_inc;
+output tPC_load;
+output tReg_load;
+output [15:0] oregA, oregR1, oregR2, oregR3, oregR4, oregR5, oregR6, oregR7;
+
 
 
 
@@ -38,7 +43,7 @@ wire [15:0] output_addr_op1; //address output from operand1 after register send 
 wire [15:0] output_op2;
 wire [15:0] byte2_addr_op2;
 wire [15:0] out_ALU;
-wire [3:0] out_Addr;
+wire [2:0] out_Addr;
 wire CPU_eq;
 wire CPU_gt;
 wire CPU_lt;
@@ -46,6 +51,7 @@ wire CPU_za;
 wire CPU_zb;
 wire [15:0] out_RAM;
 wire [15:0] out_Addr_RAM;
+wire [15:0] regA, regR1, regR2, regR3, regR4, regR5, regR6, regR7;
  
 
 
@@ -60,7 +66,7 @@ ControlSignal c1 (.clk(clk), .en(en), .CS_opcode(opcode_ins), .CS_ALU_OT(OT_ins_
 
 SplInsSet s1 (.clk(clk), .Ins_byte(byte_ins), .Ins_load(load_INS), .Ins_addr(ROM_InsSet), .Ins_mode(mode_ins), .Ins_Op1(op1_ins), .Ins_Op2(op2_ins), .Ins_Opcode(opcode_ins), .Ins_addr_output(addr_output_ins));
 
-Register r1 (.clk(clk), .Reg_addr_op1(op1_ins), .Reg_addr_op2(op2_ins), .Reg_Out_op1(op1_reg_out), .Reg_Out_op2(op2_reg_out), .Reg_data(out_ALU), .Reg_addr(out_Addr), .Reg_load(load_reg));
+Register r1 (.clk(clk), .Reg_addr_op1(op1_ins), .Reg_addr_op2(op2_ins), .Reg_Out_op1(op1_reg_out), .Reg_Out_op2(op2_reg_out), .Reg_data(out_ALU), .Reg_addr(out_Addr), .Reg_load(load_reg), .regA(regA), .regR1(regR1), .regR2(regR2), .regR3(regR3), .regR4(regR4), .regR5(regR5), .regR6(regR6), .regR7(regR7));
 
 PC p1 (.clk(clk), .Ins_addr(addr_ROM_out), .PC_load(load_pc), .PC_inc(inc_pc), .PC_addr(addr_ROM));
 
@@ -79,6 +85,17 @@ assign gt = CPU_gt;
 assign lt = CPU_lt;
 assign ALU_Out = out_ALU;
 assign Addr_out = out_Addr;
+assign tPC_load = load_pc;
+assign tPC_inc = inc_pc;
+assign oregA = regA;
+assign oregR1 = regR1;
+assign oregR2 = regR2;
+assign oregR3 = regR3;
+assign oregR4 = regR4;
+assign oregR5 = regR5;
+assign oregR6 = regR6; 
+assign oregR7 = regR7;
+assign tReg_load = load_reg;
 
 
      

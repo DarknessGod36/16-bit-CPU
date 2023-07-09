@@ -8,9 +8,15 @@ output reg [15:0] PC_addr; //this will go in InsROM
 
 reg [15:0] temp;
 
+
+
 //something 
 always@(posedge clk) begin
 
+    // if(PC_inc == 1) begin
+    //     temp = temp+1;
+    //     PC_addr <= temp;
+    // end
     if(PC_load == 0 && PC_inc == 0) begin
         temp <= temp;
         PC_addr <= temp;
@@ -22,7 +28,7 @@ always@(posedge clk) begin
     end
 
     else if(PC_load == 0 && PC_inc == 1) begin
-        temp = temp + 1;
+        temp = temp + 16'b0000000000000001;
         PC_addr <= temp;
     end
 
