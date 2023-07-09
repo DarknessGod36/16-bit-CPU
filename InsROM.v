@@ -4,6 +4,7 @@ input clk;
 input [15:0] ROM_addr;
 output reg [15:0] ROM_addr_out;
 reg [15:0] ROM_InsSet;
+reg [15:0] temp;
 output reg [15:0] ROM_InsSet_out;
 
 
@@ -33,9 +34,12 @@ initial begin
 
 end
 
-always@(posedge clk) begin
+always@(ROM_addr, clk) begin
 
-    case(ROM_addr)
+    @(posedge clk)
+    temp <= ROM_addr;
+
+    case(temp)
     //MOV
     16'b0000000000000000: ROM_InsSet = 16'b0001101101011100; 
     //MVI
@@ -54,7 +58,7 @@ always@(posedge clk) begin
     16'b0000000000001000: ROM_InsSet = 16'b0001010010000110; //----> OP1(register addr = 100) = ??, OP2(register addr = 001) = ??
 endcase
 
-    ROM_addr_out <= ROM_addr;
+    ROM_addr_out <= temp;
     ROM_InsSet_out <= ROM_InsSet;
 end
 endmodule
