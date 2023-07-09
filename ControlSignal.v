@@ -118,6 +118,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
+                        next_state = load;
                     end
                     1101: begin //this will need the 2-byte instruciton pc and it will be processed on the the InsROM, the pc will be wired to op1_data in Addressing Mode 
                         CS_ALU_OT = 2'b00;
@@ -127,6 +128,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
+                        next_state = load;
                     end
                 endcase
             end
@@ -143,6 +145,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
+                        next_state = load;
                     end 
                     
                     1100: begin
@@ -181,6 +184,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
+                        next_state = load;
 
                     end
                     0001: begin
@@ -192,6 +196,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
+                        next_state = load;
 
                     end
                     0010: begin
@@ -203,6 +208,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
+                        next_state = load;
 
                     end
                     0011: begin
@@ -214,6 +220,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
+                        next_state = load;
                         
                     end
                     //mode 10 which is Logical MOde
@@ -226,6 +233,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
+                        next_state = load;
                         
                     end
                     0101: begin
@@ -237,6 +245,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
+                        next_state = load;
                         
                     end
                     0110: begin
@@ -248,6 +257,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
+                        next_state = load;
                         
                     end
                     0111: begin
@@ -259,6 +269,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
+                        next_state = load;
                         
                     end
                     1000: begin
@@ -270,6 +281,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
+                        next_state = load;
                         
                     end
                     1001: begin
@@ -281,6 +293,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
+                        next_state = load;
                         
                     end
                     1010: begin
@@ -292,6 +305,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
+                        next_state = load;
                         
                     end
                     default:begin
@@ -302,6 +316,7 @@ always@(*) begin
                         CS_PC_inc = 0;
                         CS_PC_load = 0;
                         CS_Reg_load = 0;
+                        next_state = load;
                         
                     end 
                 endcase
