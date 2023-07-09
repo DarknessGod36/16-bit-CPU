@@ -8,7 +8,7 @@ input [15:0] op2_regaddr;
 reg [2:0] AM_Accaddr;
 input [3:0] AM_opcode;
 output reg [15:0] AM_Outdata;
-output reg [15:0] AM_OutRegaddr;
+output reg [2:0] AM_OutRegaddr;
 //op2_regaddr will be only assign on the next pc instruction set 
 initial begin
     AM_Accaddr = 3'b000;
@@ -36,7 +36,7 @@ always@(op2_data, op1_regaddr, op2_regaddr, AM_opcode) begin
         //mem[AM_Accaddr] = op1_data;
 
         default: AM_Outdata <= 16'b0000000000000000;
-        AM_OutRegaddr <= 16'b0000000000000000;
+        AM_OutRegaddr <= 3'b000;
     endcase
 end
 

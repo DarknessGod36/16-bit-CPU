@@ -1,5 +1,5 @@
 module MiniProject 
-(clk, en, za, zb, eq, gt, lt);
+(clk, en, za, zb, eq, gt, lt, ALU_Out, Addr_out);
 
 input clk;
 input en;
@@ -38,7 +38,7 @@ wire [15:0] output_addr_op1; //address output from operand1 after register send 
 wire [15:0] output_op2;
 wire [15:0] 2byte_addr_op2;
 wire [15:0] out_ALU;
-wire [15:0] out_Addr;
+wire [3:0] out_Addr;
 wire CPU_eq;
 wire CPU_gt;
 wire CPU_lt;
@@ -72,7 +72,13 @@ ALU al1 (.clk(clk), .op1(output_op1), .op2(output_op2), .ALU_opcode(opcode_ins),
 
 RAM ra1 (.clk(clk), .RAM_addr(addr_output_ins), .RAM_out(out_RAM));
 
-
+assign za = CPU_za;
+assign zb = CPU_zb;
+assign eq = CPU_eq;
+assign gt = CPU_gt;
+assign lt = CPU_lt;
+assign ALU_Out = out_ALU;
+assign Addr_out = out_Addr;
 
 
      

@@ -11,7 +11,7 @@ input [15:0] op2_regaddr;
 input [3:0] ALU_opcode;
 input [1:0] ALU_OT; //control signal
 output reg [15:0] ALU_out;
-output reg [15:0] Addr_out;
+output reg [2:0] Addr_out;
 output za, zb, eq, gt, lt;
 
 reg za, zb, eq, gt, lt;

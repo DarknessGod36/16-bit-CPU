@@ -28,8 +28,8 @@ reg CS_Reg_load;
 reg [2:0] temp_opcode;
 
 
-reg [2:0] state;
-reg [2:0] next_state ;
+reg [3:0] state;
+reg [3:0] next_state ;
 
 parameter reset = 4'b0000, load = 4'b0010, execute = 4'b0100, byte2load = 4'b1000, byte2execute = 4'b1001;
 always@(posedge clk) begin
