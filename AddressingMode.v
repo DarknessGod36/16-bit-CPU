@@ -25,7 +25,7 @@ always@(op2_data, op1_regaddr, op2_regaddr, AM_opcode) begin
         
         //MVI 
         4'b1100: //op2 
-        AM_Outdata <= op2_regaddr //this will be the next pc instruction set, the op2_data will instantly assigned after the next pc instruction set execute
+        AM_Outdata <= op2_regaddr 
         AM_OutRegaddr <= op1_regaddr;
         //mem[op1_regaddr] = op2_regaddr;
 
