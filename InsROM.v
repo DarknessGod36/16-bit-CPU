@@ -29,7 +29,7 @@ output reg [15:0] ROM_InsSet_out;
 
 
 initial begin
-    ROM_InsSet_Out = 16'b0000000000000000;
+    ROM_InsSet = 16'b0000000000000000;
 
 end
 

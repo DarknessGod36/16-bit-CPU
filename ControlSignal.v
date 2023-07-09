@@ -118,7 +118,6 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = reset;
                     end
                     1101: begin //this will need the 2-byte instruciton pc and it will be processed on the the InsROM, the pc will be wired to op1_data in Addressing Mode 
                         CS_ALU_OT = 2'b00;
@@ -128,7 +127,6 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = reset;
                     end
                 endcase
             end
@@ -183,7 +181,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = reset;
+
                     end
                     0001: begin
                     //Opcode 0001 -> MUL 
@@ -194,7 +192,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = reset;
+
                     end
                     0010: begin
                     //Opcode 0010 -> SUB
@@ -205,7 +203,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = reset;
+
                     end
                     0011: begin
                     //Opcode 0011 -> DIV
@@ -216,7 +214,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = reset;
+                        
                     end
                     //mode 10 which is Logical MOde
                     0010: begin
@@ -228,7 +226,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = reset;
+                        
                     end
                     0101: begin
                     //Opcode 0101 -> OR
@@ -239,7 +237,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = reset;
+                        
                     end
                     0110: begin
                     //Opcode 0110 -> NOR
@@ -250,7 +248,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = reset;
+                        
                     end
                     0111: begin
                     //Opcode 0111 -> INV(op1)
@@ -261,7 +259,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = reset;
+                        
                     end
                     1000: begin
                     //Opcode 1000 -> INV(op2)
@@ -272,7 +270,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = reset;
+                        
                     end
                     1001: begin
                     //Opcode 1001 -> XOR
@@ -283,7 +281,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = reset;
+                        
                     end
                     1010: begin
                     //Opcode 1010 -> XNOR
@@ -294,7 +292,7 @@ always@(*) begin
                         CS_PC_inc = 1;
                         CS_PC_load = 0;
                         CS_Reg_load = 1;
-                        next_state = reset;
+                        
                     end
                     default:begin
                         CS_ALU_OT = 2'bZZ;
@@ -304,7 +302,7 @@ always@(*) begin
                         CS_PC_inc = 0;
                         CS_PC_load = 0;
                         CS_Reg_load = 0;
-                        next_state = reset;
+                        
                     end 
                 endcase
             end
