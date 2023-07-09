@@ -8,7 +8,7 @@ output reg [15:0] PC_addr; //this will go in InsROM
 
 reg [15:0] temp;
 
-
+//something 
 always@(posedge clk) begin
 
     if(PC_load == 0 && PC_inc == 0) begin
