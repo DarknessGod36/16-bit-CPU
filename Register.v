@@ -1,7 +1,8 @@
 module  Register (
-    Reg_addr_op1, Reg_addr_op2, Reg_Out_op1, Reg_Out_op2, Reg_data, Reg_addr, Reg_load
+    clk, Reg_addr_op1, Reg_addr_op2, Reg_Out_op1, Reg_Out_op2, Reg_data, Reg_addr, Reg_load
 );
 
+input clk;
 input Reg_load; //control signal 
 input [2:0] Reg_addr_op1;
 input [2:0] Reg_addr_op2;

@@ -57,12 +57,12 @@ wire [15:0] out_Addr_RAM;
 InsROM ro1 (.clk(clk), .ROM_addr(addr_ROM), .ROM_addr_out(addr_ROM_out), .ROM_InsSet_out(ROM_InsSet));
 ControlSignal c1 (.clk(clk), .en(en), .CS_opcode(opcode_ins), .CS_ALU_OT(OT_ins), .CS_Op1_load(load_op1), .CS_Op2_load(load_op2), .CS_PC_load(load_pc), .CS_Reg_load(load_reg), .CS_Ins_load(load_INS), .CS_PC_inc(inc_pc));
 SplInsSet s1 (.clk(clk), .Ins_byte(byte_ins), .Ins_load(Ins_load), .Ins_addr(ROM_InsSet), .Ins_mode(mode_ins), .Ins_OT(OT_ins), .Ins_Op1(op1_ins), .Ins_Op2(op2_ins), .Ins_Opcode(opcode_ins), .Ins_addr_output(addr_output_ins));
-Register r1 (.Reg_addr_op1(op1_ins), .Reg_addr_op2(op2_ins), .Reg_Out_op1(op1_reg_out), .Reg_Out_op2(op2_reg_out), .Reg_data(data_reg_out), .Reg_addr(addr_reg_out), .Reg_load(load_reg));
+Register r1 (.clk(clk), .Reg_addr_op1(op1_ins), .Reg_addr_op2(op2_ins), .Reg_Out_op1(op1_reg_out), .Reg_Out_op2(op2_reg_out), .Reg_data(data_reg_out), .Reg_addr(addr_reg_out), .Reg_load(load_reg));
 PC p1 (.clk(clk), .Ins_addr(addr_ROM_out), .PC_load(load_pc), .PC_inc(inc_pc), .PC_addr(addr_ROM));
 Op1 o1 (.clk(clk), .Op1_datafromReg(op1_reg_out), .Op1_output(output_op1), .Op1_load(load_op1), .Op1_addr(op1_ins), .Op1_addr_output(output_addr_op1));
 Op2 o2 (.clk(clk), .Op2_datafromReg(op2_reg_out), .Op2_output(output_op2), .Op2_load(load_op2));
 ALU al1 (.clk(clk), .op1(output_op1), .op2(output_op2), .ALU_opcode(opcode_ins), .ALU_OT(OT_ins), .za(CPU_za), .zb(CPU_zb), .eq(CPU_eq), .gt(CPU_gt), .lt(CPU_lt), .ALU_out(out_ALU), .op1_regaddr(output_addr_op1), .op2_regaddr(out_RAM), .Addr_out(out_Addr));
-RAM ra1 (.clk, .RAM_addr(addr_output_ins), .RAM_out(out_RAM));
+RAM ra1 (.clk(clk), .RAM_addr(addr_output_ins), .RAM_out(out_RAM));
 
 
 

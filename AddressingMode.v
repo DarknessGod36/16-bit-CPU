@@ -2,7 +2,6 @@ module AddressingMode (
     op2_data, op1_regaddr, op2_regaddr, AM_opcode, AM_Outdata, AM_OutRegaddr;
 );
 
-input 
 input [15:0] op2_data;
 input [15:0] op1_regaddr;
 input [15:0] op2_regaddr;
@@ -15,7 +14,7 @@ initial begin
     AM_Accaddr = 3'b000;
 end
 
-always@(op1, op2, AM_opcode) begin
+always@(op2_data, op1_regaddr, op2_regaddr, AM_opcode) begin
     
     case (AM_opcode)
         //MOV    R1 <- R2 
