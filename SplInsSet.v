@@ -1,9 +1,9 @@
-module SplInsSet(clk, Ins_byte, Ins_load, Ins_addr, Ins_mode, Ins_OT, Ins_Op1, Ins_Op2, Ins_Opcode, Ins_addr_output);
+module SplInsSet(clk, Ins_byte, Ins_load, Ins_addr, Ins_mode, Ins_Op1, Ins_Op2, Ins_Opcode, Ins_addr_output);
 input clk;
 input Ins_load; //control signal from CPU
 input [15:0]Ins_addr; //Instruction set from ROM 
 output reg [1:0] Ins_mode; //Mode from Instruction set 
-output reg [1:0] Ins_OT; //Operation type from Instruction set ---> operation type will be used on ALU 
+reg [1:0] Ins_OT; //Operation type from Instruction set ---> operation type will be used on ALU 
 output reg [2:0] Ins_Op1; //Operand 1 address from Instruction set ---> address will be used in register module 
 output reg [2:0] Ins_Op2; //Operand 2 address from Instruction set ---> address will be used in register module 
 output reg [3:0] Ins_Opcode; //Opcode from the instruction set ----> will be used on the control signal, Arith, Logic and Addressing Mode
