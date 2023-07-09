@@ -3,11 +3,13 @@ module MiniProject
 
 input clk;
 input en;
-output reg CPU_za;
-output reg CPU_zb;
-output reg CPU_eq;
-output reg CPU_gt;
-output reg CPU_lt
+output reg za;
+output reg zb;
+output reg eq;
+output reg gt;
+output reg lt;
+output reg [15:0] ALU_out;
+output reg [15:0] Addr_out;
 
 
 
