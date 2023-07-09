@@ -13,21 +13,25 @@ always@(posedge clk) begin
 
     if(PC_load == 0 && PC_inc == 0) begin
         temp <= temp;
+        PC_addr <= temp;
     end
 
     else if(PC_load == 1 && PC_inc == 0) begin
         temp <= Ins_addr;
+        PC_addr <= temp;
     end
 
     else if(PC_load == 0 && PC_inc == 1) begin
-        temp = temp + 16'b0000000000000001;
+        temp = temp + 1;
+        PC_addr <= temp;
     end
 
     else if(PC_load == 1 && PC_inc == 1) begin
         temp = 16'b0000000000000000;
+        PC_addr <= temp;
     end
 
-    PC_addr <= temp;
+    
 end
 endmodule
 
