@@ -27,10 +27,10 @@ reg CS_Reg_load;
 reg [3:0] temp_opcode;
 
 
-reg [4:0] state;
-reg [4:0] next_state ;
+reg [2:0] state;
+reg [2:0] next_state ;
 
-parameter reset = 4'b00000, load = 4'b00010, execute = 4'b00100, byte2load = 4'b10000, byte2execute = 4'b10000;
+parameter reset = 3'b000, load = 3'b001, execute = 3'b010, byte2load = 3'b011, byte2execute = 3'b100;
 always@(posedge clk) begin
     if(en == 0) begin
         state = reset;
@@ -112,7 +112,7 @@ always@(*) begin
                     //Opcode 0000 -> normal move
                         CS_ALU_OT = 2'b00;
                         CS_Ins_load = 0;
-                        CS_Op1_load = 0; //the op1 module wont run or the op1 variable will receive the value beforehand but wont proceed to any operation 
+                        CS_Op1_load = 1; //the op1 module wont run or the op1 variable will receive the value beforehand but wont proceed to any operation 
                         CS_Op2_load = 1;
                         CS_PC_inc = 1;
                         CS_PC_load = 0;

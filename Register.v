@@ -1,5 +1,5 @@
 module  Register (
-    clk, Reg_addr_op1, Reg_addr_op2, Reg_Out_op1, Reg_Out_op2, Reg_data, Reg_addr, Reg_load, regA, regR1, regR2, regR3, regR4, regR5, regR6, regR7
+    clk, Reg_addr_op1, Reg_addr_op2, Reg_Out_op1, Reg_Out_op2, Reg_data, Reg_addr, Reg_load, regA, regR2
 );
 
 input clk;
@@ -10,7 +10,7 @@ input [2:0] Reg_addr; //address after instruction
 input [15:0] Reg_data;//data after instruction 
 output reg [2:0] Reg_Out_op1;
 output reg [2:0] Reg_Out_op2;
-output [15:0] regA, regR1, regR2, regR3, regR4, regR5, regR6, regR7;
+output [15:0] regA, regR2;
 
 reg [15:0] mem [0:7];
 
@@ -46,11 +46,6 @@ always@(clk, Reg_load) begin
 end
 
 assign regA = mem[0];
-assign regR1 = mem[1];
 assign regR2 = mem[2];
-assign regR3 = mem[3];
-assign regR4 = mem[4];
-assign regR5 = mem[5];
-assign regR6 = mem[6];
-assign regR7 = mem[7];
+
 endmodule
