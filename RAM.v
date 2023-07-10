@@ -4,9 +4,11 @@ input clk;
 input [15:0] RAM_addr;  
 output reg [15:0] RAM_out;
 reg [15:0] RAM_data;
-reg [15:0] mem [0:15];
 
 
+initial begin
+    RAM_out = 16'd0000;
+end
 always@(posedge clk) begin 
 
     case (RAM_addr)

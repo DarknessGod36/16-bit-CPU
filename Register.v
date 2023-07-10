@@ -8,8 +8,8 @@ input [2:0] Reg_addr_op1;
 input [2:0] Reg_addr_op2;
 input [2:0] Reg_addr; //address after instruction
 input [15:0] Reg_data;//data after instruction 
-output reg [2:0] Reg_Out_op1;
-output reg [2:0] Reg_Out_op2;
+output reg [15:0] Reg_Out_op1;
+output reg [15:0] Reg_Out_op2;
 output [15:0] regA, regR2;
 
 reg [15:0] mem [0:7];

@@ -1,5 +1,5 @@
 module MiniProject 
-(clk, en, za, zb, eq, gt, lt, ALU_Out, Addr_out, tPC_load, tPC_inc, oregA, oregR2, tReg_load, Ram_Output);
+(clk, en, za, zb, eq, gt, lt, ALU_Out, Addr_out, tPC_load, tPC_inc, oregA, oregR2, tReg_load, Ram_Output, insaddr, RAMaddr_Output, op1out, opcodeout, byte2opcodeout);
 
 input clk;
 input en;
@@ -15,8 +15,11 @@ output tPC_load;
 output tReg_load;
 output [15:0] oregA, oregR2;
 output [15:0]Ram_Output;
-
-
+output [15:0] insaddr;
+output [15:0] RAMaddr_Output;
+output [15:0] op1out;
+output [3:0] opcodeout;
+output [3:0] byte2opcodeout;
 
 
 wire [15:0] addr_ROM; //PC
@@ -53,6 +56,7 @@ wire CPU_zb;
 wire [15:0] out_RAM;
 wire [15:0] out_Addr_RAM;
 wire [15:0] regA, regR2;
+wire [3:0] b2opcode;
  
 
 
@@ -63,7 +67,7 @@ wire [15:0] regA, regR2;
 
 InsROM ro1 (.clk(clk), .ROM_addr(addr_ROM), .ROM_addr_out(addr_ROM_out), .ROM_InsSet_out(ROM_InsSet));
 
-ControlSignal c1 (.clk(clk), .en(en), .CS_opcode(opcode_ins), .CS_ALU_OT(OT_ins_CS), .CS_Op1_load(load_op1), .CS_Op2_load(load_op2), .CS_PC_load(load_pc), .CS_Reg_load(load_reg), .CS_Ins_load(load_INS), .CS_PC_inc(inc_pc));
+ControlSignal c1 (.clk(clk), .en(en), .CS_opcode(opcode_ins), .CS_ALU_OT(OT_ins_CS), .CS_Op1_load(load_op1), .CS_Op2_load(load_op2), .CS_PC_load(load_pc), .CS_Reg_load(load_reg), .CS_Ins_load(load_INS), .CS_PC_inc(inc_pc), .byte2opcode(b2opcode));
 
 SplInsSet s1 (.clk(clk), .Ins_byte(byte_ins), .Ins_load(load_INS), .Ins_addr(ROM_InsSet), .Ins_mode(mode_ins), .Ins_Op1(op1_ins), .Ins_Op2(op2_ins), .Ins_Opcode(opcode_ins), .Ins_addr_output(addr_output_ins));
 
@@ -75,7 +79,7 @@ Op1 o1 (.clk(clk), .Op1_datafromReg(op1_reg_out), .Op1_output(output_op1), .Op1_
 
 Op2 o2 (.clk(clk), .Op2_datafromReg(op2_reg_out), .Op2_output(output_op2), .Op2_load(load_op2));
 
-ALU al1 (.clk(clk), .op1(output_op1), .op2(output_op2), .ALU_opcode(opcode_ins), .ALU_OT(OT_ins_CS), .za(CPU_za), .zb(CPU_zb), .eq(CPU_eq), .gt(CPU_gt), .lt(CPU_lt), .ALU_out(out_ALU), .op1_regaddr(output_addr_op1), .op2_regaddr(out_RAM), .Addr_out(out_Addr));
+ALU al1 (.clk(clk), .op1(output_op1), .op2(output_op2), .ALU_opcode(opcode_ins), .ALU_OT(OT_ins_CS), .za(CPU_za), .zb(CPU_zb), .eq(CPU_eq), .gt(CPU_gt), .lt(CPU_lt), .ALU_out(out_ALU), .op1_regaddr(output_addr_op1), .op2_regaddr(out_RAM), .Addr_out(out_Addr), .ALU_b2opcode(b2opcode));
 
 RAM ra1 (.clk(clk), .RAM_addr(addr_output_ins), .RAM_out(out_RAM));
 
@@ -92,7 +96,11 @@ assign oregA = regA;
 assign oregR2 = regR2;
 assign tReg_load = load_reg;
 assign Ram_Output = out_RAM;
-
+assign insaddr = ROM_InsSet;
+assign RAMaddr_Output = addr_output_ins;
+assign op1out = output_op1;
+assign opcodeout = opcode_ins;
+assign byte2opcodeout = b2opcode;
 
      
 endmodule
